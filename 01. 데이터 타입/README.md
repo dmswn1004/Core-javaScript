@@ -103,7 +103,8 @@ var obj2 = obj1;
 <img width="399" alt="스크린샷 2023-03-06 오전 2 47 18" src="https://user-images.githubusercontent.com/101851472/222977018-9ff6a1cf-3424-4273-ab66-ad7574da5ba5.png">
 
 ▶︎ 변수 복사하는 과정은 모두 같은 주소를 바라보게 되는 점에서 동일!  
-
+<br>  
+  
 > 변수 복사 이후 값 변경 결과 비교 - 객체의 프로퍼티 변경 시  
 ~~~javaScript
 b = 15;
@@ -112,10 +113,15 @@ obj2.c = 20;
 <img width="399" alt="스크린샷 2023-03-06 오전 3 00 56" src="https://user-images.githubusercontent.com/101851472/222977605-f40307ed-5884-4907-a048-e5ee31f5ff28.png">
 
 ▶ 기본형 데이터 : 값이 변경됨, 참조형 데이터 : 변경 x  
-
+<br>
+  
 > 변수 복사 이후 값 변경 결과 비교 - 객체 자체를 변경했을 때  
 ~~~javaScript
 b = 15;
 obj2.c = {c: 20, d: 'ddd'};
 ~~~
+<img width="399" alt="스크린샷 2023-03-06 오전 3 11 21" src="https://user-images.githubusercontent.com/101851472/222978060-87c64d99-146c-4565-ad62-0af893cb2f75.png">
+
+## 1-5 불변 객체  
+#### 1-5-1 불변 객체를 만드는 간단한 방법  
 
