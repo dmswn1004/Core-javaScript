@@ -156,3 +156,27 @@ console.log(user == user2); // false
 ▶︎ user 객체 내부의 변경이 필요할 때 무조건 copyObject 함수를 사용하기로 합의하고 그 규칙을 지킨다는 전제하에서 user 객체가 **불변 객체**라고 볼 수 있다.  
 
 #### 1-5-2 얕은 복사와 깊은 복사  
+- 얕은 복사 : 바로 아래 단계의 값만 복사하는 방법 → 주소값만 복사한다는 의미!  
+- 깊은 복사 : 내부의 모든 값들을 하나하나 찾아서 전부 복사하는 방법  
+> 중첩된 객체에 대한 얕은 복사  
+~~~javaScript
+var user = {
+  name: 'Jaenam',
+  urls: {
+    portfolio: 'http://github.com/abc',
+    blog: 'http://blog.com/abc',
+    facebook: 'http://facebook.com/abc'
+  }
+};
+var user2 = copyObject(user);
+
+user2.name = 'Jung';
+console.log(user.name === user2.name); // false
+
+user.urls.portfolio = 'http://portfolio.com';
+console.log(user.urls.portfolio === user2.urls.portfolio); // true
+
+user.urls.blog = '';
+console.log(user.urls.blog === user2.urls.blog); // true
+~~~
+▶︎ user 객체에 직접 속한 프로퍼티에 대해서는 복사해서 완전히 새로운 데이터가 만들어진 반면, 한 단계 더 들어간 urls의 내부 프로퍼티들은 기존 데이터를 그대로 
