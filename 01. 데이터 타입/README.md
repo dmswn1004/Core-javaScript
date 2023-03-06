@@ -124,4 +124,35 @@ obj2.c = {c: 20, d: 'ddd'};
 
 ## 1-5 불변 객체  
 #### 1-5-1 불변 객체를 만드는 간단한 방법  
+- 기존 데이터는 변하지 않고 내부 프로퍼티를 변경할 필요가 있을 때마다 매번 새로운 객체를 만들어 재할당하기로 규칙을 정하거나 자동으로 새로운 객체를 만드는 도구 활용하면 불변성 확보 가능  
+**불변 객체** → 값으로 전달받은 객체에 변경을 가하더라도 원본 객체는 변하지 않아야 하는 경우 필요!  
 
+> 기존 정보를 복사해서 새로운 객체를 반환하는 함수(얕은 복사) copyObject를 이용한 객체 복사
+~~~javaScript
+var user = {
+  name: 'Jaenam',
+  gender: 'male'
+};
+
+var copyObject = function(target) {
+  var result = {};
+  for (var prop in target) {
+    result[prop] = target[prop];
+  }
+  return result;
+}
+
+var user2 = copyObject(user);
+user2.name = 'Jung';
+
+if (user1= user2) {
+  console.log('유저 정보가 변경돠었습니다.'); // 결과 : 유저 정보가 변경돠었습니다.
+}
+
+console.log(user.name, user2.name); // Jaenam Jung
+console.log(user == user2); // false
+~~~
+
+▶︎ user 객체 내부의 변경이 필요할 때 무조건 copyObject 함수를 사용하기로 합의하고 그 규칙을 지킨다는 전제하에서 user 객체가 **불변 객체**라고 볼 수 있다.  
+
+#### 1-5-2 얕은 복사와 깊은 복사  
