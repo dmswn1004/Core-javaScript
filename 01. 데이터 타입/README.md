@@ -179,4 +179,63 @@ console.log(user.urls.portfolio === user2.urls.portfolio); // true
 user.urls.blog = '';
 console.log(user.urls.blog === user2.urls.blog); // true
 ~~~
-▶︎ user 객체에 직접 속한 프로퍼티에 대해서는 복사해서 완전히 새로운 데이터가 만들어진 반면, 한 단계 더 들어간 urls의 내부 프로퍼티들은 기존 데이터를 그대로 
+▶︎ user 객체에 직접 속한 프로퍼티에 대해서는 복사해서 완전히 새로운 데이터가 만들어진 반면, 한 단계 더 들어간 urls의 내부 프로퍼티들은 기존 데이터를 그대로 참조  
+
+> 중첩된 객체에 대한 깊은 복사  
+~~~javaScript
+var user2 = copyObject(user);
+user2.urls = copyObject(user.urls);
+
+user.urls.portfolio = 'http://portfolio.com';
+console.log(user.urls.portfolio === user2.urls.portfolio); // false
+
+user.urls.blog = '';
+console.log(user.urls.blog === user2.urls.blog); // false
+~~~
+▶︎ 객체를 복사할 때 객테 내부의 모든 값을 복사해서 완전히 새로운 데이터를 만들고자 할 때, **기본형 데이터**일 경우에는 그대로 복사하면 되지만 **참조형 데이터**는 다시 그 내부의 프로퍼티들을 복사해야 함
+
+→ 참조형 데이터가 있을 때마다 **재귀적**으로 함수를 호출하여 객체를 완전히 복사해야 한다!
+
+> JSON을 활용한 간단한 깊은 복사 (메서드나 숨겨진 프로퍼티인 __proto__나 getter/setter등과 같이 JSON으로 변경할 수 없는 프로퍼티들은 모두 무시)  
+~~~javaScript
+var copyObjectViaJSON = function (target) {
+  return JSON.parse(JSON.stringify(target));
+};
+var obj = {
+  a: 1,
+  b: {
+    c: null,
+    d: [1, 2],
+    func1: function () {console.log(3);}
+  },
+  func2: function () {console.log(4);}
+};
+var obj2 = copyObjectViaJSON(obj);
+
+obj.a = 3;
+obj.b.c = 4;
+obj.b.d[1] = 3;
+
+console.log(obj); // {a: 1, b: {c: null, d: [1,3], func1: f() }, func2: f() }
+console.log(obj2); // {a: 3, b: {c: 4, d: [1,2]}
+~~~
+
+## 1-6 undefined와 null  
+- **undefined**  
+  1. 값을 대입하지 않은 변수, 즉 데이터 영역의 메모리 주소를 지정하지 않은 식별자에 접근할 때  
+  2. 객체 내부의 존재하지 않느 프로퍼티에 접근하려고 할 때  
+  3. return 문이 없거나 호출되지 않는 함수의 실행 결과  
+  
+→ 그 자체로 값, 비어 있음  
+> undefined와 null의 비교  
+~~~javaScript
+var n = null;
+console.log(typeof n); // object
+
+console.log(n == undefined); // ture
+console.log(n == null); // ture
+
+
+console.log(n === undefined); // false
+console.log(n === null); // ture
+~~~
