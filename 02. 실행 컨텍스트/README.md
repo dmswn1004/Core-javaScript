@@ -133,3 +133,45 @@ d(); // error (함수명은 오직 내부에서만 접근 가능)
 **호이스팅 시 차이점**
 - **함수 선언문** : **전체**를 호이스팅
 - **함수 표현식** : 변수는 **선언부**만 끌어올립니다. (할당부 이후부터 실행 가능)
+
+#### 2-3-2 스코프, 스코프 체인, outerEnvironmentReference
+- **스코프** : 식별자에 대한 유효범위  
+- **스코프 체인** : 스코프를 안에서부터 바깥으로 차례로 검색해 나가는 것
+
+→  LexicalEnvironment의 **outerEnvironmentReference**로 인해 가능!  
+
+##### **스코프 체인**  
+outerEnvironmentReference : 현재 호출된 함수가 **선언될 당시**의 LexicalEnvironment를 참조 (과거 시점) / **연결 리스트 형태**  
+→ **선언**하는 행위 : 콜 스택 상에서 **어떤 실행 컨텍스트가 활성화된 상태**일 때뿐!!!  
+
+여러 스코프에서 동일한 식별자를 선언한 경우에는 무조건 스코프 체인 상에서 가장 먼저 발견된 식별자에만 접근 가능
+
+```jsx
+var a=1;
+var outer = function(){
+	var inner = function(){
+		console.log(a); //undefined
+		var a = 3;
+	};
+	inner();
+	console.log(a); // 1
+};
+outer();
+console.log(a); // 1
+```
+
+L.E(LexicalEnvironment) / e(environmentRecord) / o(outerEnvironmentReference) / [숫자] (코드 줄 번호)
+<img width="398" alt="스크린샷 2023-03-09 오전 1 30 12" src="https://user-images.githubusercontent.com/101851472/223777396-7c7b699c-2d9b-4911-83bf-0acac46a8b6d.png">
+
+전역 컨텍스트 → outer 컨텍스트 → inner 컨텍스트 
+- 점차 규모 작아짐
+- 스코프 체인을 타고 접근 가능한 변수의 수 늘어남
+
+**변수 은닉화** : inner 함수 내부에서 a 변수를 선언했기 때문에 전역 공간에서 선언한 동일한 이름의 a 변수에는 접근할 수 없음
+
+##### **전연변수와 지역변수**
+- 전역변수 (a, outer)
+- 지역변수 (inner, a)
+
+## 2-4 this
+thisBinding에는 this로 지정된 객체가 저장됨 → this가 지정되지 않은 경우 전역 객체가 저장됨
