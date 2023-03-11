@@ -122,15 +122,15 @@ this를 바인딩 하지 않는 **화살표 함수(arrow function)** 도입 (화
 사용법 : new 명령어와 함께 함수를 호출 → 생성자의 prototype 프로퍼티를 참조하는 __proto__라는 프로퍼티가 있는 객체 생성 → 미리 준비된 공통 속성 및 개성을 해당 객체(this)에 부여
 
 ```jsx
-var Cat =function (name, age) {
+var Cat = function (name, age) {
 	this.name = name;
 	this.age = age;
 };
 
-let choco = new Cat("초코", 7);
-let nabi = new Cat("나비", 5);
+var choco = new Cat("초코", 7);
+var nabi = new Cat("나비", 5);
 console.log(choco, nabi); 
 
-*// Cat{ name:'초코', age:7 }
-// Cat{ name:'나비', age:5 }*
+// Cat{ name:'초코', age:7 }
+// Cat{ name:'나비', age:5 }
 ```
