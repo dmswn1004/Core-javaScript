@@ -34,7 +34,7 @@ console.log(c, window.c, this.c); // Uncauht ReferenceError: c in not defined
 - 전역변수로 선언한 경우 → 삭제 X
     - configurable(변경 및 삭제 가능성) 속성 false로 정의됨
 
-#### 메서드로서 호출할 때 그 메서드 내부에서의 this
+#### 3-1-2 메서드로서 호출할 때 그 메서드 내부에서의 this
 **함수 vs 메서드**  
 
 ▶︎ **함수를 실행하는 방법**  
