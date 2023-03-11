@@ -63,3 +63,74 @@ obj['method'](2); // { method: f } 2
 
 **메서드 내부에서의 this**  
 - this에는 **호출한 주체**에 대한 정보가 담김 ⇒ **호출 주체** : 함수명(프로퍼티명) 앞의 객체
+
+#### 3-1-3 함수로서 호출할 때 그 함수 내부에서의 this
+**함수 내부에서의 this**. 
+함수를 함수로서 호출한 경우에는 호출 주체의 정보를 알 수 없기 때문에 this가 지정되지 않았기 때문에 this는 **전역 객체**를 가리킨다.
+
+**메서드의 내부 함수에서의 this**  
+> 내부 함수에서의 this  
+```jsx
+var obj = {
+	outer: function() {
+		console.log(this); // obj1
+		var innerFunc = function (){
+			console.log(this); // window
+		}
+		innerFunc(); // 함수로서 호출
+
+		var obj2 = {
+			innerMethod: innerFunc // obj2
+		};
+		obj2.innerMethod(); // 메서드로서 호출
+	}
+};
+obj1.outer(); // 메서드로서 호출
+```
+
+**메서드의 내부 함수에서의 this를 우회하는 방법**  
+> 내부 함수에서의 this를 우회하는 방법
+```jsx
+var obj = {
+	outer: function() {
+		console.log(this);  // {outer: f}
+		var innerFunc1 = function (){
+			console.log(this); // window
+		}
+	};
+	innerFunc1();
+
+	var self = this;
+	var innerFunc2 = function() {
+		console.log(self); // {outer: f}
+	};
+};
+obj.outer();
+```
+
+**this를 바인딩 하지 않는 함수**  
+this를 바인딩 하지 않는 **화살표 함수(arrow function)** 도입 (화살표 함수는 실행 컨텍스트를 생성할 때 this 바인딩 과정 자체가 빠지게 되어, 상위 스코프의 this를 그래도 활용 가능)
+
+### 3-1-4 콜백 함수 호출 시 그 함수 내부에서의 this
+**콜백 함수** : 함수 A의 제어권을 다른 함수(또는 메서드) B에게 넘겨주는 경우 제어권을 넘겨준 함수 A  
+- 함수 A는 함수 B의 내부 로직에 따라 실행  
+
+### 3-1-5 생성자 함수 내부에서의 this
+**생성자 함수** : 어떤 공통된 성질을 지니는 객체들을 생성하는 데 사용하는 함수  
+객체지향 언어 ⇒ 클래스(생성자), 인스턴스(클래스를 통해 만든 객체)
+⇒ **생성자** : 구체적인 인스턴스를 만들기 위한 틀  
+사용법 : new 명령어와 함께 함수를 호출 → 생성자의 prototype 프로퍼티를 참조하는 __proto__라는 프로퍼티가 있는 객체 생성 → 미리 준비된 공통 속성 및 개성을 해당 객체(this)에 부여
+
+```jsx
+var Cat =function (name, age) {
+	this.name = name;
+	this.age = age;
+};
+
+let choco = new Cat("초코", 7);
+let nabi = new Cat("나비", 5);
+console.log(choco, nabi); 
+
+*// Cat{ name:'초코', age:7 }
+// Cat{ name:'나비', age:5 }*
+```
