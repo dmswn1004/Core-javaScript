@@ -7,4 +7,4 @@
 [03. this](https://github.com/dmswn1004/Core-javaScript/tree/main/03.%20this#03-this)
 
 
-[06. ](https://github.com/dmswn1004/Core-javaScript/tree/main/06.%20%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85#readme)
+[06. 프로토타입](https://github.com/dmswn1004/Core-javaScript/tree/main/06.%20%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85#readme)
