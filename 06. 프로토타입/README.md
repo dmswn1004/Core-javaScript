@@ -52,3 +52,22 @@ prototype에 어떤 메서드나 프로퍼티가 있다면 인스턴스에도 �
 
 생성자 함수의 프로퍼티인 prototype 객체 내부에 constructor 프로퍼티 존재 (__proto__에도 존재)  
 → 생성자 함수(자기 자신) 참조
+⇒ 이유 : 인스턴스로부터 그 원형이 무엇인지 알 수 있는 수단  
+<img width="283" alt="스크린샷 2023-03-14 오전 3 11 32" src="https://user-images.githubusercontent.com/101851472/224793975-4e8dc299-9537-410a-a04d-98e88c4851f9.png">
+
+> 모두 동인한 대상을 가리키는 코드
+```jsx
+[Constructor]
+[instance].__proto__.constructor
+[instance].constructor
+Object.getPrototypeOf([instance]).constructor
+[Constructor].prototype.constructor
+```
+
+> 모두 동일한 객체(prototype) 접근 가능
+```jsx
+[Constructor].prototype
+[instance].__proto__
+[instance]
+Object.getPrototypeOf([instance])
+```
