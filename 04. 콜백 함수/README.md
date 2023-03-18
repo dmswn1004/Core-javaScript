@@ -23,3 +23,19 @@ var intervalID = scope.setInterval(func,delay[, param1, param2, ...]);
 값이 반환, 변수에 담는 이유는 반복 실행되는 중간에 종료(**clearInterval**) 할 수 있게 하기 위해서이다.
 
 #### 4-2-2 인자
+```jsx
+Array.prototype.map(callback[, thisArg])
+callback: function(currentValue, index, array)
+```
+**map 메서드**  
+: 대상이 되는 배열의 모든 요소들을 처음부터 끝까지 하나식 꺼내어 콜백 함수를 반복 호출하고, 콜백 함수의 실행 결과들을 모아 **새로운 배열 반환**   
+: **첫 번째 인자로 callback 함수**를 받고, 생략 가능한 **두 번째 인자로 콜백 함수 내부에서 this로 인식할 대상**을 특정할 수 있다. thisArg를 생략할 경우, 일반적인 함수와 마찬가지로 **전역 객체**가 바인딩 된다.  
+
+- **function(currentValue, index, array)**
+    - **호출하는 주체**는 **map 메서드** ⇒ **제어권**도 **map 메서드**에게 있음!!
+
+#### 4-2-2 this
+> 콜백 함수 내부에서의 this
+```jsx
+setTimeout(function () { console.log(this); }, 300); // window { ... }
+```
