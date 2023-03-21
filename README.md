@@ -11,3 +11,5 @@
 [05. 클로저](https://github.com/dmswn1004/Core-javaScript/tree/main/05.%20%ED%81%B4%EB%A1%9C%EC%A0%80#readme)
 
 [06. 프로토타입](https://github.com/dmswn1004/Core-javaScript/tree/main/06.%20%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85#readme)
+
+[07. 클래스](https://github.com/dmswn1004/Core-javaScript/tree/main/07.%20%ED%81%B4%EB%9E%98%EC%8A%A4#readme)
