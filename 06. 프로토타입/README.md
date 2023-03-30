@@ -71,3 +71,47 @@ Object.getPrototypeOf([instance]).constructor
 [instance]
 Object.getPrototypeOf([instance])
 ```
+
+## 6-2 프로토타입 체인
+#### 6-2-1 메서드 오버라이드
+인스턴스가 **동일한 이름의 프로퍼티 또는 메서드**를 가지고 있는 상황에서 발생!  
+⇒ **메서드 오버라이드**는 원본이 그대로 있는 상태에서 다른 대항을 그 위에 얹는 이미지라고 생각하면 됨  
+
+> 메서드 오버라이드  
+```jsx
+var Person = function(name) {
+	this.name = name;
+};
+Person.prototype.getName = function (){
+	return this.name;
+};
+
+var iu = new Person('지금');
+iu.getName = function() {
+	return '바로' + this.name;
+};
+console.log(iu.getName()); // 바로 지금
+
+console.log(iu.__proto__.getName()); // undefined
+```
+**getName 메서드 찾는 방식** : 가장 가까운 대상인 자신의 프로퍼티 검색 → (없으면) __proto__ 검색  
+
+#### 6-2-2 프로토타입 체인
+**프로토타입 체인** : 어떤 데이터의 __proto__ 프로퍼티 내부에 다시 __proto__ 프로퍼티가 연쇄적으로 이어진 것  
+⇒ **프로토타입 체이닝** : 프로토타입 체인을 따라가며 검색하는 것  
+
+- 데이터 자신의 프로퍼티들을 검색해서 원하는 메서드가 있으면 메서드를 실행하고, 없으면 __proto__를 검색해서 있으면 그 메서드를 실행하는 식으로 진행  
+ 
+> 메서드 오버라이드와 프로토타입 체이닝  
+```jsx
+var arr = [1,2];
+Array.prototype.toString.call(arr); // 1,2
+Object.prototype.toString.call(arr); // [Object Array]
+arr.toString(); // 1,2
+
+arr.toString = function(){
+	return this.join('_');
+};
+arr.toString(); // 1_2 -> Array.prototype.toString이 아닌 arr.toString이 실행된 것
+```
+
