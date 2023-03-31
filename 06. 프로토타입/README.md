@@ -115,3 +115,59 @@ arr.toString = function(){
 arr.toString(); // 1_2 -> Array.prototype.toString이 아닌 arr.toString이 실행된 것
 ```
 
+#### 6-2-3 객체 전용 메서드의 예외사항
+어떤 생성자 함수이든 prototype은 반드시 객체이기 때문에 **Object.prototype이 언제나 프로토타입 체인의 최상단에 존재**  
+> Object.prototype에 추가한 메서드에의 접근
+```jsx
+Object.prototype.getEntries = function() {
+	var res = [];
+	for (var prop in this) {
+		if(this.hasOwnProperty(prop)) {
+			res.push([prop, this[prop]]);
+		}
+	}
+	return res;
+};
+var data = [
+	['object', {a: 1, b: 2, c: 3}], // [["a",1], ["b", 2], ["c", 3]]
+	['number', 345], // []
+	['string', 'abc'], // [["0", "a"], ["1", "b"], ["2", "c"]]
+	['boolean', false], // []
+	['func', function(){}], // []
+	['array', [1, 2, 3]] // [["0", 1], ["1", 2], ["2", 3]]
+];
+data.forEach(function (datum){
+	console.log(datum[1].getEntries());
+});
+```
+⇒ 객체만을 대상으로 동작하는 객체 전용 메서드들은 부득이 **Object에 스태틱 메서드**로 부여할 수밖에 없다.  
+
+#### 6-2-4 다중 프로토타입 체인
+> Grade 생성자 함수와 인스턴스
+```jsx
+var Grade = function() {
+	var args = Array.prototype.slice.call(arguments);
+	for(var i = 0; i < args.length; i++){
+		this[i] = args[i];
+	}
+	this.length = args.length;
+};
+var g = new Grade(100,100);
+```
+
+![IMG_0575](https://user-images.githubusercontent.com/101851472/229111449-e28723aa-e6be-4ebc-a8a8-87b8b8f47987.jpg)
+
+> 서로 별개로 분리돼 있던 데이터가 연결되도록 설정
+```jsx
+Grade.prototype = []; 
+```
+
+![IMG_0575 복사본](https://user-images.githubusercontent.com/101851472/229111506-0dccd57d-ffae-4bb8-a24f-80727fc33fa2.jpg)
+
+```jsx
+console.log(g); // Grade(2) [100, 80]
+g.pop();        
+console.log(g); // Grade(1) [100]
+g.push(90);
+console.log(g); // Grade(2) [100, 90]               
+```
