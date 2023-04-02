@@ -38,3 +38,57 @@ console.log(Rectangle.isRectangle(rect1)); // true
 ```
 <img width="507" alt="스크린샷 2023-03-21 오후 3 16 12" src="https://user-images.githubusercontent.com/101851472/226532140-57c725f9-e3d7-4426-8fcd-ddd82aeebdec.png">
 
+## 7-4 ES6의 클래스 및 클래스 상속
+ES6 → 클래스 문법 도입!  
+> ES5와 ES6의 클래스 문법 비교  
+```jsx
+var ES5 = function (name){
+	this.name = name;
+};
+ES5.staticMethod = function (){
+	return this.name + ' method';
+};
+ES5.prototype.method = function (){
+	return this.name + ' method';
+};
+var es5Instance = new ES5('es5');
+console.log(ES5.staticMethod()); // es5 staticMethod
+console.log(es5Instance.method()); // es5 method
+---------------------------------
+var ES6 = class { // 클래스 본문 영역
+	constructor (name) { // function 키워드 생략해도 메서드로 인식 / 생성자 함수와 동일한 역할
+		this.name = name;
+	}
+	static staticMethod () { // static 메서드임을 알림 / 생성자 함수 자신만이 호출 가능
+		return this.name + ' staticMethod';
+	}
+	method () { // 자동으로 prototype 객체 내부에 할당되는 메서드
+		return this.name + ' method';
+	}
+};
+var es6Instance = new ES6('es6');
+console.log(ES6.staticMethod()); // es6 staticMethod
+console.log(es6Instance.method()); // es6 method
+```
+
+> ES6의 클래스 상속  
+```jsx
+var Rectangle = class {
+	constructor (width, heigth) {
+		this.width = width;
+		this.heigth = heigth;
+	}
+	getArea (){
+		return this.width * this.heigth;
+	}
+};
+var Square = class extends Rectangle { // 상속 관계 설정
+	constructor (width) {
+		super(width, width); // superClass의 constructor를 실행함
+	}
+	getArea() {
+		console.log('size is : ', super.getArea());
+	}
+}
+```
+**extends** 키워드 ⇒ **상속 관계** 설정 (Square는 Rectangle을 상속받는 SubClass)  
